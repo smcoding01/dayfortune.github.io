@@ -28,13 +28,19 @@
       
     </nav>
     
-    <div id="qr-reader" style="width:500px"></div> 
+    < div  id = " reader " width = " 600px " height = " 600px " > </ div > 
     <div id="qr-reader-results"></div>
     </div>
 
   
 </body>
 <script src="/html5-qrcode.min.js"></script>
+<input type="file" id="qr-input-file" accept="image/*">
+<!-- 
+  Or add captured if you only want to enable smartphone camera, PC browsers will ignore it.
+-->
+
+<input type="file" id="qr-input-file" accept="image/*" capture>
 
 </head>
 </html>
