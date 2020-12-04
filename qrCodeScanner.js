@@ -1,58 +1,36 @@
-const qrcode = window.qrcode;
-
-const video = document.createElement("video");
-const canvasElement = document.getElementById("qr-canvas");
-const canvas = canvasElement.getContext("2d");
-
-const qrResult = document.getElementById("qr-result");
-const outputData = document.getElementById("outputData");
-const btnScanQR = document.getElementById("btn-scan-qr");
-
-let scanning = false;
-
-qrcode.callback = res => {
-  if (res) {
-    outputData.innerText = res;
-    scanning = false;
-
-    video.srcObject.getTracks().forEach(track => {
-      track.stop();
-    });
-
-    qrResult.hidden = false;
-    canvasElement.hidden = true;
-    btnScanQR.hidden = false;
+function docReady(fn) {
+  // see if DOM is already available
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+      // call on next available tick
+      setTimeout(fn, 1);
+  } else {
+      document.addEventListener("DOMContentLoaded", fn);
   }
-};
+} 
 
-btnScanQR.onclick = () => {
-  navigator.mediaDevices
-    .getUserMedia({ video: { facingMode: "environment" } })
-    .then(function(stream) {
-      scanning = true;
-      qrResult.hidden = true;
-      btnScanQR.hidden = true;
-      canvasElement.hidden = false;
-      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-      video.srcObject = stream;
-      video.play();
-      tick();
-      scan();
-    });
-};
-
-function tick() {
-  canvasElement.height = video.videoHeight;
-  canvasElement.width = video.videoWidth;
-  canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-
-  scanning && requestAnimationFrame(tick);
-}
-
-function scan() {
-  try {
-    qrcode.decode();
-  } catch (e) {
-    setTimeout(scan, 300);
+docReady(function() {
+  var resultContainer = document.getElementById('qr-reader-results');
+  var lastResult, countResults = 0;
+  
+  var html5QrcodeScanner = new Html5QrcodeScanner(
+      "qr-reader", { fps: 10, qrbox: 250 });
+  
+  function onScanSuccess(qrCodeMessage) {
+      if (qrCodeMessage !== lastResult) {
+          ++countResults;
+          lastResult = qrCodeMessage;
+          resultContainer.innerHTML += `<div>[${countResults}] - ${qrCodeMessage}</div>`;
+          
+          // Optional: To close the QR code scannign after the result is found
+          html5QrcodeScanner.clear();
+      }
   }
-}
+  
+  // Optional callback for error, can be ignored.
+  function onScanError(qrCodeError) {
+      // This callback would be called in case of qr code scan error or setup error.
+      // You can avoid this callback completely, as it can be very verbose in nature.
+  }
+  
+  html5QrcodeScanner.render(onScanSuccess, onScanError);
+});
