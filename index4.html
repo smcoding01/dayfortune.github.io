@@ -11,7 +11,34 @@
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="jquery-3.1.1.js"></script>
         <link rel="stylesheet" type="text/css" href="select.css">
- <script src="html5-qrcode.min.js"></script>
+
+<body>
+   <nav class="navigator">
+        <div class="nav_area">
+            <a class="icon" href="/smcoding01.github.io/index2.html">
+                <i class="text">행운 번호</i> 
+            </a>
+            <div class="nav_group">
+                <a class="nav_link" href="/smcoding01.github.io/index2.html">자동</a>
+                <a class="nav_link" href="/smcoding01.github.io/index3.html">반자동</a>
+		<a class="nav_link" href="/smcoding01.github.io/index4.html">당첨확인(QR code)</a>
+
+             
+            </div>
+        </div>
+    </nav>
+        </div>
+    </nav>
+          <div id="qr-reader" style="width:500px"></div>
+          <div id="qr-reader-results"></div>
+    </div>
+    </div>
+   
+    </div>
+
+  
+</body>
+<script src="/html5-qrcode.min.js"></script>
 <script>
     function docReady(fn) {
         // see if DOM is already available
@@ -41,31 +68,5 @@
         html5QrcodeScanner.render(onScanSuccess);
     });
 </script>
-<body>
-   <nav class="navigator">
-        <div class="nav_area">
-            <a class="icon" href="/smcoding01.github.io/index2.html">
-                <i class="text">행운 번호</i> 
-            </a>
-            <div class="nav_group">
-                <a class="nav_link" href="/smcoding01.github.io/index2.html">자동</a>
-                <a class="nav_link" href="/smcoding01.github.io/index3.html">반자동</a>
-		<a class="nav_link" href="/smcoding01.github.io/index4.html">당첨확인(QR code)</a>
-
-             <div id="qr-reader" style="width:500px"></div>
-             <div id="qr-reader-results"></div>
-
-            </div>
-        </div>
-    </nav>
-        </div>
-    </nav>
- 
-    </div>
-    </div>
-   
-    </div>
-
-  
-</body>
+</head>
 </html>
